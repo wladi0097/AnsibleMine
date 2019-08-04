@@ -1,0 +1,69 @@
+---                                                                                                                     
+- hosts: mineservers
+  tasks:
+  - name: Run apt-update
+    apt:
+      update_cache: yes
+  - name: Install packages
+    apt:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - apt-transport-https
+      - ca-certificates
+      - curl 
+      - gnupg2
+      - software-properties-common
+      - python-pip
+      - python-pkg-resources
+      - python-setuptools
+  - name: Add docker key
+    apt_key:
+      url: https://download.docker.com/linux/debian/gpg
+      state: present
+  - name: Add docker official repository for Debian Stretch
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+      state: present
+  - name: Index new repo into the cache
+    become: yes
+    apt:
+      name: "*"
+      state: latest
+      update_cache: yes
+      force_apt_get: yes
+  - name: Install docker
+    apt:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+  - name: install docker-pip
+    pip:
+      name: 
+      - setuptools
+      - docker
+  - name: Create mine directory
+    file:
+      path: /usr/local/mine
+      state: directory
+  - name: Create world directory
+    file:
+      path: /root/usr/local/mine/data/world/
+      state: directory
+  - name: Copy world
+    copy:
+      src: ./world/
+      dest: /root/usr/local/mine/data/world/
+  - name: Start Minecraft
+    docker_container:
+      name: mc
+      image: itzg/minecraft-server
+      env: 
+        EULA: "TRUE" 
+      ports:
+       - "25565:25565"
+      volumes:
+       - ./usr/local/mine/data:/data
