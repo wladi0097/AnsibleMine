@@ -4,6 +4,7 @@
   - name: Run apt-update
     apt:
       update_cache: yes
+      
   - name: Install packages
     apt:
       name: "{{ packages }}"
@@ -17,21 +18,24 @@
       - python-pip
       - python-pkg-resources
       - python-setuptools
+      
   - name: Add docker key
     apt_key:
       url: https://download.docker.com/linux/debian/gpg
       state: present
+      
   - name: Add docker official repository for Debian Stretch
     apt_repository:
       repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
       state: present
+      
   - name: Index new repo into the cache
-    become: yes
     apt:
       name: "*"
       state: latest
       update_cache: yes
       force_apt_get: yes
+      
   - name: Install docker
     apt:
       name: "{{ packages }}"
@@ -40,30 +44,56 @@
       - docker-ce
       - docker-ce-cli
       - containerd.io
-  - name: install docker-pip
+      
+  - name: Install docker-pip
     pip:
       name: 
       - setuptools
       - docker
-  - name: Create mine directory
+      
+  - name: Ensure group "docker" exists
+    group:
+      name: docker
+      state: present
+      
+  - name: Add new user 'mine', who can access docker
+    user:
+      uid: 6969
+      shell: /bin/bash
+      name: mine
+      append: yes
+      create_home: true
+      state: present
+
+  - name: Create data directory
     file:
-      path: /usr/local/mine
+      path: /home/mine/data
       state: directory
-  - name: Create world directory
+      owner: mine
+
+  - name: Create anisble tmp directory
     file:
-      path: /root/usr/local/mine/data/world/
+      path: /home/mine/.ansible/tmp
+      mode: "0700"
       state: directory
-  - name: Copy world
+      owner: mine
+      
+  - name: Copy data
     copy:
-      src: ./world/
-      dest: /root/usr/local/mine/data/world/
+      src: ./data/
+      dest: /home/mine/data/
+      owner: mine
+      group: docker
+      
   - name: Start Minecraft
     docker_container:
       name: mc
       image: itzg/minecraft-server
       env: 
-        EULA: "TRUE" 
+        EULA: "TRUE"
+        UID: "6969"
       ports:
        - "25565:25565"
       volumes:
-       - ./usr/local/mine/data:/data
+       - "/home/mine/data:/data"
+    become_user: mine
