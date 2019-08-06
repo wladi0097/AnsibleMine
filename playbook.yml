@@ -1,5 +1,7 @@
 ---                                                                                                                     
 - hosts: mineservers
+  vars_files:
+  - ./vars.yml
   tasks:
   - name: Run apt-update
     apt:
@@ -58,7 +60,7 @@
       
   - name: Add new user 'mine', who can access docker
     user:
-      uid: 6969
+      uid: "{{ user_uid }}"
       shell: /bin/bash
       name: mine
       append: yes
@@ -83,7 +85,6 @@
       src: ./data/
       dest: /home/mine/data/
       owner: mine
-      group: docker
       
   - name: Start Minecraft
     docker_container:
@@ -91,9 +92,11 @@
       image: itzg/minecraft-server
       env: 
         EULA: "TRUE"
-        UID: "6969"
+        UID: "{{ user_uid }}"
+        SERVER_PORT: "{{ server_port }}"
+        MEMORY: "{{ server_memory }}"
       ports:
-       - "25565:25565"
+       - "{{ server_port }}:{{ server_port }}"
       volumes:
        - "/home/mine/data:/data"
     become_user: mine
