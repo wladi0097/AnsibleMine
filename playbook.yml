@@ -2,10 +2,18 @@
 - hosts: mineservers
   vars_files:
   - ./vars.yml
+  gather_facts: no
+  pre_tasks:
+  - name: 'install python 2'
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python)
   tasks:
+  - name: Gathering facts
+    setup:
   - name: Run apt-update
     apt:
       update_cache: yes
+    tags:
+      - setup
       
   - name: Install packages
     apt:
@@ -20,24 +28,50 @@
       - python-pip
       - python-pkg-resources
       - python-setuptools
+     tags:
+       - setup
       
-  - name: Add docker key
+  - name: Add docker key (Debian)
     apt_key:
       url: https://download.docker.com/linux/debian/gpg
       state: present
-      
-  - name: Add docker official repository for Debian Stretch
+    when: ansible_distribution == 'Debian'
+    tags:
+      - setup
+
+  - name: Add docker key (Ubuntu)
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+    when: ansible_distribution == 'Ubuntu'
+    tags:
+      - setup
+
+  - name: Add docker official repository for (Debian Stretch)
     apt_repository:
       repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
       state: present
-      
+    when: ansible_distribution == 'Debian'
+    tags:
+      - setup
+
+  - name: Add docker offician repository (Ubuntu Bionic)
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+      state: present
+    when: ansible_distribution == 'Ubuntu'
+    tags:
+      - setup
+
   - name: Index new repo into the cache
     apt:
       name: "*"
       state: latest
       update_cache: yes
       force_apt_get: yes
-      
+    tags:
+      - setup
+
   - name: Install docker
     apt:
       name: "{{ packages }}"
@@ -46,17 +80,23 @@
       - docker-ce
       - docker-ce-cli
       - containerd.io
+    tags:
+      - setup
       
   - name: Install docker-pip
     pip:
       name: 
       - setuptools
       - docker
-      
+    tags:
+      - setup
+
   - name: Ensure group "docker" exists
     group:
       name: docker
       state: present
+    tags:
+      - setup
       
   - name: Add new user 'mine', who can access docker
     user:
@@ -66,12 +106,16 @@
       append: yes
       create_home: true
       state: present
+    tags:
+      - setup
 
   - name: Create data directory
     file:
       path: /home/mine/data
       state: directory
       owner: mine
+    tags:
+      - setup
 
   - name: Create anisble tmp directory
     file:
@@ -79,13 +123,17 @@
       mode: "0700"
       state: directory
       owner: mine
+    tags:
+      - setup
       
   - name: Copy data
     copy:
       src: ./data/
       dest: /home/mine/data/
       owner: mine
-      
+    tags:
+      - setup
+
   - name: Start Minecraft
     docker_container:
       name: mc
@@ -95,8 +143,11 @@
         UID: "{{ user_uid }}"
         SERVER_PORT: "{{ server_port }}"
         MEMORY: "{{ server_memory }}"
+        VERSION: "{{ server_version }}"
       ports:
        - "{{ server_port }}:{{ server_port }}"
       volumes:
        - "/home/mine/data:/data"
     become_user: mine
+    tags:
+      - start
