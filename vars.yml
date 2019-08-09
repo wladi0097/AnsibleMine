@@ -1,3 +1,4 @@
 server_port: "25565"
 server_memory: "7G"
+server_version: "latest"
 user_uid: "6969"
