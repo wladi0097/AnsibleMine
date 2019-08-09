@@ -1,6 +1,9 @@
 # AnsibleMine
 
-!! Remote server must be debian 9 or newer !!
+### Supported Platforms
+
+* Ubuntu 18.04.
+* Debian 9 or newer.
 
 ## What?
 
