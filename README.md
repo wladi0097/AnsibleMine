@@ -11,6 +11,8 @@ Setup a remote Minecraft server with Ansible and Docker in 1 minute!
 
 ## Dependencies
 
+Please note that all these dependencies will be automatically installed, if they are not already installed on your system.
+
 * [Python](https://www.python.org/downloads/)
 * [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 * [Python Docker](https://pypi.org/project/docker/)
