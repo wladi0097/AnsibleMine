@@ -17,6 +17,7 @@
       - curl 
       - gnupg2
       - software-properties-common
+      - python3-pip
       - python-pip
       - python-pkg-resources
       - python-setuptools
