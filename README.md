@@ -6,6 +6,8 @@
 
 Setup a remote Minecraft server with Ansible and Docker in 1 minute!
 
+This is using the awesome [docker image](https://github.com/itzg/docker-minecraft-server) provided by [itzg](https://github.com/itzg) in the background.
+
 ## Dependencies you have to install yourself:
 
 * [Python](https://www.python.org/downloads/)
