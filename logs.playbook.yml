@@ -9,9 +9,9 @@
 
   - name: Get stdout
     debug:
-      msg: "File name is {{logContent.stdout}}"
+      msg: "File name is {{ logContent.stdout }}"
       
   - name: Get stderr
     debug:
-      msg: "File name is {{logContent.stderr}}"
+      msg: "File name is {{ logContent.stderr }}"
      
