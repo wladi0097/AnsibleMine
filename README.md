@@ -1,4 +1,6 @@
-# AnsibleMine
+<p align="center">
+  <img alt="AnsibleMine" src="https://raw.githubusercontent.com/wladi0097/AnsibleMine/master/logo.png" width="500"/>
+</p>
 
 !! Remote server must be debian 9 or newer !!
 
