@@ -34,3 +34,9 @@ bash createServer.sh
 ```bash
 bash getBackup.sh
 ```
+
+### Get logs from all Servers
+
+```bash
+bash getLogs.sh
+```
