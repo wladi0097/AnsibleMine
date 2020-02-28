@@ -1,4 +1,16 @@
 server_port: "25565"
 server_memory: "7G"
+
 server_version: "latest"
+server_pvp: "TRUE"
+server_onlinemode: "TRUE"
+server_name: "Anisble Minecraftserver"
+server_difficulty: "easy"
+server_maxplayers: "20"
+server_icon: ""
+server_showachievements: "TRUE"
+server_ops: "" # Example: "notch,wlad"
+server_motd: "Have fun!"
+
+
 user_uid: "6969"

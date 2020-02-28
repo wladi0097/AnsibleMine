@@ -1,0 +1,17 @@
+---                                                                                                                     
+- hosts: mineservers
+  vars_files:
+  - ./vars.yml
+  tasks:
+  - name: Get logs
+    command: docker logs mc
+    register: logContent
+
+  - name: Get stdout
+    debug:
+      msg: "File name is {{ logContent.stdout }}"
+      
+  - name: Get stderr
+    debug:
+      msg: "File name is {{ logContent.stderr }}"
+     

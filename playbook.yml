@@ -23,6 +23,7 @@
       - curl 
       - gnupg2
       - software-properties-common
+      - python3-pip
       - python-pip
       - python-pkg-resources
       - python-setuptools
@@ -112,10 +113,21 @@
       image: itzg/minecraft-server
       env: 
         EULA: "TRUE"
+        SNOOPER_ENABLED: "FALSE"
+        GUI: "FALSE"
         UID: "{{ user_uid }}"
         SERVER_PORT: "{{ server_port }}"
         MEMORY: "{{ server_memory }}"
         VERSION: "{{ server_version }}"
+        PVP: "{{ server_pvp }}"
+        ONLINE_MODE: "{{ server_onlinemode }}"
+        SERVER_NAME: "{{ server_name }}"
+        DIFFICULTY: "{{ server_difficulty }}"
+        ICON: "{{ server_icon }}"
+        OPS: "{{ server_ops }}"
+        ANNOUNCE_PLAYER_ACHIEVEMENTS: "{{ server_showachievements }}"
+        MAX_PLAYERS: "{{ server_maxplayers }}"
+        MOTD: "{{ server_motd }}"
       ports:
        - "{{ server_port }}:{{ server_port }}"
       volumes:

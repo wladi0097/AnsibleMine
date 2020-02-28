@@ -1,0 +1,21 @@
+---                                                                                                                     
+- hosts: mineservers
+  vars_files:
+  - ./vars.yml
+  vars:
+    fileName: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}.{{ansible_date_time.epoch}}.bz"
+  tasks:
+  - debug:
+      msg: "File name is {{ fileName }}"
+      
+  - name: Compress data directory
+    archive:
+      path: "/home/mine/data"
+      dest: "/home/mine/{{ fileName }}"
+      format: bz2
+      
+  - name: Download backup
+    fetch:
+      src: "/home/mine/{{ fileName }}"
+      dest: "./backups/{{ fileName }}"
+      flat: yes
