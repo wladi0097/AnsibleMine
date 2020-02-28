@@ -2,7 +2,10 @@
   <img alt="AnsibleMine" src="https://raw.githubusercontent.com/wladi0097/AnsibleMine/master/logo.png" width="500"/>
 </p>
 
-!! Remote server must be debian 9 or newer !!
+### Supported Platforms
+
+* Ubuntu 18.04.
+* Debian 9 or newer.
 
 ## What?
 
@@ -15,6 +18,8 @@ This is using the awesome [docker image](https://github.com/itzg/docker-minecraf
 * [Python](https://www.python.org/downloads/)
 * [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 * [Python Docker](https://pypi.org/project/docker/)
+
+These are host only requirements. They will be automatically installed on the remote system, if they are not already.
 
 ## How?
 

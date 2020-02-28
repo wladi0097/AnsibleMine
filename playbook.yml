@@ -2,7 +2,13 @@
 - hosts: mineservers
   vars_files:
   - ./vars.yml
+  gather_facts: no
+  pre_tasks:
+  - name: 'install python 2'
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python)
   tasks:
+  - name: Gathering facts
+    setup:
   - name: Run apt-update
     apt:
       update_cache: yes
@@ -22,23 +28,37 @@
       - python-pkg-resources
       - python-setuptools
       
-  - name: Add docker key
+  - name: Add docker key (Debian)
     apt_key:
       url: https://download.docker.com/linux/debian/gpg
       state: present
-      
-  - name: Add docker official repository for Debian Stretch
+    when: ansible_distribution == 'Debian'
+
+  - name: Add docker key (Ubuntu)
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: Add docker official repository for (Debian Stretch)
     apt_repository:
       repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
       state: present
-      
+    when: ansible_distribution == 'Debian'
+
+  - name: Add docker offician repository (Ubuntu Bionic)
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+      state: present
+    when: ansible_distribution == 'Ubuntu'
+
   - name: Index new repo into the cache
     apt:
       name: "*"
       state: latest
       update_cache: yes
       force_apt_get: yes
-      
+
   - name: Install docker
     apt:
       name: "{{ packages }}"
@@ -53,7 +73,7 @@
       name: 
       - setuptools
       - docker
-      
+
   - name: Ensure group "docker" exists
     group:
       name: docker
@@ -86,7 +106,7 @@
       src: ./data/
       dest: /home/mine/data/
       owner: mine
-      
+
   - name: Start Minecraft
     docker_container:
       name: mc
@@ -98,6 +118,7 @@
         UID: "{{ user_uid }}"
         SERVER_PORT: "{{ server_port }}"
         MEMORY: "{{ server_memory }}"
+        VERSION: "{{ server_version }}"
         PVP: "{{ server_pvp }}"
         ONLINE_MODE: "{{ server_onlinemode }}"
         SERVER_NAME: "{{ server_name }}"

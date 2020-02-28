@@ -1,5 +1,7 @@
 server_port: "25565"
 server_memory: "7G"
+
+server_version: "latest"
 server_pvp: "TRUE"
 server_onlinemode: "TRUE"
 server_name: "Anisble Minecraftserver"
