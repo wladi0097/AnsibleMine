@@ -106,7 +106,17 @@
       src: ./data/
       dest: /home/mine/data/
       owner: mine
-
+      
+  - name: Set server type to curseforge if modpack url is provided
+    set_fact:
+      server_type: CURSEFORGE
+    when: server_curse_forge_modpack != ""
+      
+  - name: Set server type to default if empty
+    set_fact:
+      server_type: VANILLA
+    when: server_type is undefined
+      
   - name: Start Minecraft
     docker_container:
       name: mc
@@ -118,6 +128,7 @@
         UID: "{{ user_uid }}"
         SERVER_PORT: "{{ server_port }}"
         MEMORY: "{{ server_memory }}"
+        TYPE: "{{ server_type }}"
         VERSION: "{{ server_version }}"
         PVP: "{{ server_pvp }}"
         ONLINE_MODE: "{{ server_onlinemode }}"
@@ -128,6 +139,7 @@
         ANNOUNCE_PLAYER_ACHIEVEMENTS: "{{ server_showachievements }}"
         MAX_PLAYERS: "{{ server_maxplayers }}"
         MOTD: "{{ server_motd }}"
+        CF_SERVER_MOD: "{{ server_curse_forge_modpack }}"
       ports:
        - "{{ server_port }}:{{ server_port }}"
       volumes:
