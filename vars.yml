@@ -10,7 +10,7 @@ server_difficulty: "normal"
 server_maxplayers: "20"
 server_icon: ""
 server_showachievements: "TRUE"
-server_ops: "" # Example: ""
+server_ops: "" # Example: "notch, wlad"
 server_motd: "Have fun!"
 
 # Optional

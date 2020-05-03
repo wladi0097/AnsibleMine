@@ -130,7 +130,6 @@
       remote_src: yes
       owner: mine
       group: mine
-
     when: world_is_zip.stat.exists
 
   - name: Set server type to curseforge if modpack url is provided

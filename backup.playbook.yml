@@ -8,7 +8,7 @@
   - debug:
       msg: "File name is {{ fileName }}"
       
-  - name: Compress data directory
+  - name: Compress world
     archive:
       path: "{{ world_location }}"
       dest: "/home/mine/{{ fileName }}"
