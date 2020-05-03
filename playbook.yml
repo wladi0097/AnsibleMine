@@ -12,7 +12,7 @@
   - name: Run apt-update
     apt:
       update_cache: yes
-      
+
   - name: Install packages
     apt:
       name: "{{ packages }}"
@@ -20,14 +20,16 @@
       packages:
       - apt-transport-https
       - ca-certificates
-      - curl 
+      - curl
       - gnupg2
       - software-properties-common
       - python3-pip
       - python-pip
       - python-pkg-resources
       - python-setuptools
-      
+      - zip
+      - unzip
+
   - name: Add docker key (Debian)
     apt_key:
       url: https://download.docker.com/linux/debian/gpg
@@ -67,7 +69,7 @@
       - docker-ce
       - docker-ce-cli
       - containerd.io
-      
+
   - name: Install docker-pip
     pip:
       name: 
@@ -78,7 +80,7 @@
     group:
       name: docker
       state: present
-      
+
   - name: Add new user 'mine', who can access docker
     user:
       uid: "{{ user_uid }}"
@@ -100,23 +102,23 @@
       mode: "0700"
       state: directory
       owner: mine
-      
+
   - name: Copy data
     copy:
       src: ./data/
       dest: /home/mine/data/
       owner: mine
-      
+
   - name: Set server type to curseforge if modpack url is provided
     set_fact:
       server_type: CURSEFORGE
     when: server_curse_forge_modpack != ""
-      
+
   - name: Set server type to default if empty
     set_fact:
       server_type: VANILLA
     when: server_type is undefined
-      
+
   - name: Start Minecraft
     docker_container:
       name: mc
