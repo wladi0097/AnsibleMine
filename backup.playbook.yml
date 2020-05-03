@@ -3,16 +3,16 @@
   vars_files:
   - ./vars.yml
   vars:
-    fileName: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}.{{ansible_date_time.epoch}}.bz"
+    fileName: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}.{{ansible_date_time.epoch}}.zip"
   tasks:
   - debug:
       msg: "File name is {{ fileName }}"
       
   - name: Compress data directory
     archive:
-      path: "/home/mine/data"
+      path: "{{ world_location }}"
       dest: "/home/mine/{{ fileName }}"
-      format: bz2
+      format: zip
       
   - name: Download backup
     fetch:

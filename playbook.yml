@@ -109,6 +109,30 @@
       dest: /home/mine/data/
       owner: mine
 
+  - name: Create world folder if not exists
+    file:
+      path: "{{ world_location }}"
+      state: directory
+      mode: '0777'
+      recurse: yes
+      owner: mine
+      group: mine
+
+  - name: Check if a provided world is a zip
+    stat:
+      path: /home/mine/data/world.zip
+    register: world_is_zip
+
+  - name: Unzip world if it was a zip
+    unarchive:
+      src: /home/mine/data/world.zip
+      dest: "{{ world_location }}"
+      remote_src: yes
+      owner: mine
+      group: mine
+
+    when: world_is_zip.stat.exists
+
   - name: Set server type to curseforge if modpack url is provided
     set_fact:
       server_type: CURSEFORGE

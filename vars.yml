@@ -1,19 +1,20 @@
 server_port: "25565"
-server_memory: "7G"
+server_memory: "29G"
 
 # Required
 server_version: "LATEST"
 server_pvp: "TRUE"
 server_onlinemode: "TRUE"
 server_name: "Anisble Minecraftserver"
-server_difficulty: "easy"
+server_difficulty: "normal"
 server_maxplayers: "20"
 server_icon: ""
 server_showachievements: "TRUE"
-server_ops: "" # Example: "notch,wlad"
+server_ops: "" # Example: ""
 server_motd: "Have fun!"
 
 # Optional
-server_curse_forge_modpack: "https://www.curseforge.com/minecraft/modpacks/stoneblock/files/2699533/download" # Keep empty if you want vanilla or add the download link here
+world_location: "/home/mine/data/world" # world locatiom, default: "/home/mine/data/world"
+server_curse_forge_modpack: "" # Keep empty if you want vanilla or add the download link here
 
 user_uid: "6969"
