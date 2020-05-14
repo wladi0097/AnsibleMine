@@ -1,0 +1,20 @@
+server_port: "25565"
+server_memory: "29G"
+
+# Required
+server_version: "LATEST"
+server_pvp: "TRUE"
+server_onlinemode: "TRUE"
+server_name: "Anisble Minecraftserver"
+server_difficulty: "normal"
+server_maxplayers: "20"
+server_icon: ""
+server_showachievements: "TRUE"
+server_ops: "" # Example: "notch, wlad"
+server_motd: "Have fun!"
+
+# Optional
+world_location: "/home/mine/data/FeedTheBeast/Eternal (ServerPack 1.3.5.3)/world/" # world locatiom, default: "/home/mine/data/world"
+server_curse_forge_modpack: "https://media.forgecdn.net/files/2932/890/MCEternal(ServerPack1.3.5.3).zip" # Keep empty if you want vanilla or add the download link here
+
+user_uid: "6969"
