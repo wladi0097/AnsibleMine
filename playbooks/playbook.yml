@@ -1,7 +1,7 @@
 ---                                                                                                                     
 - hosts: mineservers
   vars_files:
-  - ./vars.yml
+  - ../vars.yml
   gather_facts: no
   pre_tasks:
   - name: 'install python 2'
@@ -105,7 +105,7 @@
 
   - name: Copy data
     copy:
-      src: ./data/
+      src: ../data/
       dest: /home/mine/data/
       owner: mine
 
