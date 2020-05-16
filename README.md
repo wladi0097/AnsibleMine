@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="AnsibleMine" src="https://raw.githubusercontent.com/wladi0097/AnsibleMine/master/logo.png" width="500"/>
+  <img alt="AnsibleMine" src="https://raw.githubusercontent.com/wladi0097/AnsibleMine/master/misc/logo.png" width="500"/>
 </p>
 
 ### Supported Platforms
