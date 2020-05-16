@@ -1,0 +1,7 @@
+---
+- hosts: mineservers
+  vars_files:
+  - ./vars.yml
+  tasks:
+  - name: Start server
+    command: docker start mc
