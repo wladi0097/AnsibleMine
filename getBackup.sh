@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ansible-playbook backup.playbook.yml -i inventory
+ansible-playbook ./playbooks/backup.playbook.yml -i inventory

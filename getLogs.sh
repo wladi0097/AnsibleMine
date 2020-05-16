@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ansible-playbook logs.playbook.yml -i inventory
+ansible-playbook ./playbooks/logs.playbook.yml -i inventory
