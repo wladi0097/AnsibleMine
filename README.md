@@ -8,7 +8,14 @@
 * Debian 9 or newer.
 
 ### Quick tutorial:
-* The host system should have `Python`, `Ansible` and `Python Docker` installed
+#### Cli generated config:
+* The host system should have `Python`, `Ansible`  -> `apt install python3 ansible`
+* Install python requirements -> `pip3 install -r requirements.txt`
+* Put your world.zip or world into `data`
+* Run `python3 main.py`
+
+#### Manually building configs:
+* The host system should have `Python`, `Ansible`  -> `apt install python3 ansible`
 * Copy the `inventory.example` to `inventory` and fill it with your server(s)
 * Configure `vars.yml`
 * Put your world.zip or world into `data`
@@ -32,7 +39,7 @@ These are host only requirements. They will be automatically installed on the re
 
 ## How?
 
-### Prerequisites / Configuration
+### Prerequisites for **manual** configuration
 
 (required)
 1. Copy the `inventory.example` to `inventory` and fill it with your servers. 
